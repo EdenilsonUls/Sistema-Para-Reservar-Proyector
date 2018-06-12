@@ -1,0 +1,33 @@
+/* 
+    Document   : estilosLayout
+    Created on : 4/05/2013, 05:25:48 PM
+    Author     : David
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#container{
+    background-color: #9999ff;    
+}
+#header{
+    background-color: #ff66ff;   
+    padding-bottom: 3px;
+    text-align: center;
+}
+#menu{
+    float: left;
+    background-color: #9999ff;
+    width: 10%;
+}
+#content{
+    float: left;
+    background-color: #00ccff;
+    width: 90%;
+    text-align: justify;
+}
+#footer{
+    clear: both;
+    background-color: #ff6666;
+    text-align: center;
+}
+

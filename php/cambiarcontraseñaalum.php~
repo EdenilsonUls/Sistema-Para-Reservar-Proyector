@@ -1,0 +1,123 @@
+<?php 
+
+//para los caracteres especiales del idioma
+@header("Content-Type: text/html;charset=iso-8859-1");
+
+	//para iniciar sesión
+	session_start();
+
+	//incluye el archivo conectar
+	include('../../include/conectar.php');
+
+	//creamos un objeto instanciando la clase Conexion
+	$bd = new Conexion();
+
+	//validar a sesión
+	
+
+	#tomar el id a modificar
+	if (isset($_GET['id'])) {
+		# para tomar el id que se envía por get
+		$id = $_GET['id'];
+	}
+
+	$mensaje = '';
+	//validar el envío del formulario
+	if (isset($_POST['txtpassword'])) {
+		//tomamos los valores
+		$id = $_POST['txtid'];
+		$nombre = $_POST['txtNombre'];
+
+
+		//usamos el método guardar
+		$resultado = $bd->modificar("alumno", "password = '$password'", "id = $id");
+
+		if ($resultado == 1) {
+			# Se guardaron los datos
+			$mensaje = '<div class="alert alert-success alert-dismissible fade in" role="alert">
+  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    				<span aria-hidden="true">&times;</span>
+  				</button>
+  				<strong>Excelente!</strong>  Los Datos Se Actualizaron Correctamente.
+				</div>';
+		} else {
+			# NO Se guardaron los datos
+			$mensaje = '<div class="alert alert-danger alert-dismissible fade in" role="alert">
+  				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    				<span aria-hidden="true">&times;</span>
+  				</button>
+  				<strong>Vaya!</strong> Los Datos NO Se Actualizaron.
+				</div>';
+		}
+
+	}
+
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<?php include ("../metas_links.html"); ?>
+
+</head>
+<body>
+<div class="container-fluid">
+	<header id="logo-fijo" class="main row">
+		<center>
+			<img  id="logo" class="img-responsive" alt="Este es EL logo" src="../../img/logo.png" />
+		</center>
+	</header>
+</div>
+<div class="container">
+	<section  class="main row">
+		<header class="col-md-12">
+			<?php include("../cabecera/cabecera-manto.php"); ?>
+		</header>
+	</section>
+</div>
+<div class="container">
+	<section class="main row">
+		<article id="contenido" class="col-sm-10 col-md-10  col-lg-12">
+			<div class="panel panel-info">
+			  <div class="panel-heading">
+			    <label for="usuario" id="panel"><span class="glyphicon glyphicon-flag"></span> FORMULARIO PARA EDITAR DEPARTAMENTOS DE TRABAJO</label>
+			  </div>
+			  <div class="panel-body" id="panel-cuerpo">
+			    <article id="contactanos">
+					<form action="cambiarcontraseñaalum.php" class="form-horizontal" method="POST" enctype="multipar/form-data">
+							<div class="form-group">
+								<label for="password" class="col-sm-3 control-label">
+									password:
+								</label>
+								<div class="col-sm-7">
+									<input type="text" class="form-control" id="password" name="txtpassword" value="<?php echo $bd->verValor('', '', '', $id);?>" placeholder="Escriba Aqu&iacute; El Nombre" required />
+
+									<!-- id -->
+									<input type="hidden" name="txtid" value="<?php echo $bd->verValor('iddepartamento', 'departamento', 'iddepartamento', $id);?>"/>
+								</div>
+
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-9">
+									<button type="submit" class="btn btn-md btn-info" title="Editar" ><span class="glyphicon glyphicon-edit"></span> Editar</button>
+									<a id="btn-secundario" href="../consultar/ver-departamento.php" class="btn btn-md btn-default"><span class="glyphicon glyphicon-share-alt"></span> Volver</a>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-3 col-sm-7">
+									<?php echo $mensaje; ?>
+								</div>
+							</div>
+						</form>
+				</article>
+			  </div>
+			</div>
+		</article>
+	</section>
+</div>
+<footer>
+	<?php include ('../../include/pie.html'); ?>
+</footer>
+</body>
+
+</html>
